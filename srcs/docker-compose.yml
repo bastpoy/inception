@@ -1,0 +1,22 @@
+services:
+  nginx:
+    container_name : nginx
+    image : nginx:mainline
+    restart: unless-stopped
+    env_file: .env
+    port:
+      -"443:80"
+  
+  mariadb:
+    container_name: mariadb
+    image: maraidb:latest
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      -"3306:3306"
+    environnement:
+      MARIADB_ROOT_PASSWORD: marianne
+    volumes:
+      - db_data:/home/bpoyet/data/mariadb
+volumes:
+  db_data:
