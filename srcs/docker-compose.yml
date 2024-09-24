@@ -1,22 +1,39 @@
 services:
-  nginx:
-    container_name : nginx
-    image : nginx:mainline
-    restart: unless-stopped
-    env_file: .env
-    port:
-      -"443:80"
+  # nginx:
+  #   container_name : nginx
+  #   image : nginx:mainline
+  #   restart: unless-stopped
+  #   env_file: .env
+  #   port:
+  #     -"443:80"
   
-  mariadb:
-    container_name: mariadb
-    image: maraidb:latest
-    restart: unless-stopped
-    env_file: .env
-    ports:
-      -"3306:3306"
-    environnement:
-      MARIADB_ROOT_PASSWORD: marianne
+  db:
+    # container_name: mariadb
+    image: mariadb:latest
+    command: '--default-authentication-plugin=mysql_native_password'
+    restart: always
+    # env_file: .env
+    expose: # permet d'exposer un port sans le publier sur l'hote. Present dans le docker compose mais pas dans l'hote
+      - 3306
+    environment: # environnement mySQL pour plus de flexibilite avec Wordpress 
+      - MYSQL_ROOT_PASSWORD=somewordpress
+      - MYSQL_DATABASE=wordpress
+      - MYSQL_USER=wordpress
+      - MYSQL_PASSWORD=wordpress    
     volumes:
-      - db_data:/home/bpoyet/data/mariadb
+      - db_data:/home/bpoyet/data
+  wordpress:
+    # container_name: wordpress
+    image: wordpress:6.2.1-php8.1-apache
+    ports: ["80:80"]
+    restart: always
+    volumes:
+      wp_data:/home/bpoyet/data
+    environment:
+      - WORDPRESS_DB_HOST=db
+      - WORDPRESS_DB_USER=wordpress
+      - WORDPRESS_DB_PASSWORD=wordpress
+      - WORDPRESS_DB_NAME=wordpress
 volumes:
   db_data:
+  wp_db:
