@@ -21,14 +21,14 @@ services:
       - MYSQL_USER=wordpress
       - MYSQL_PASSWORD=wordpress    
     volumes:
-      - db_data:/home/bpoyet/data
+      - db_data:/var/lib/mysql
   wordpress:
     # container_name: wordpress
     image: wordpress:6.2.1-php8.1-apache
     ports: ["80:80"]
     restart: always
     volumes:
-      wp_data:/home/bpoyet/data/wordpress
+      wp_data:/var/www/html
     environment:
       - WORDPRESS_DB_HOST=db
       - WORDPRESS_DB_USER=wordpress
