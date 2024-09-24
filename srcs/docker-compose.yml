@@ -28,7 +28,7 @@ services:
     ports: ["80:80"]
     restart: always
     volumes:
-      wp_data:/home/bpoyet/data
+      wp_data:/home/bpoyet/data/wordpress
     environment:
       - WORDPRESS_DB_HOST=db
       - WORDPRESS_DB_USER=wordpress
@@ -36,4 +36,14 @@ services:
       - WORDPRESS_DB_NAME=wordpress
 volumes:
   db_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/bpoyet/data/mariadb    
   wp_db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/bpoyet/data/wordpress
