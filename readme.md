@@ -80,10 +80,6 @@ Permet aux containers de communiquer entre eux et avec le monde exterieur
 - Dans mon Docker-compose j'utilise une base de donnee mariadb mais j'utilise des informations d'authentification propre a mySQL car ceci assure la compatibilite avec WordPress et la flexibilite la configuration de la base de donnee.
 - Quand je cree un volume par exemple pour Wordpress celui-ci va stocker les fichiers de la base de donnee Wordpress. cela permet de stocker les donnees en dehors du conteneur et de les reutiliser facilement.
     => le volume est "declare" deux fois. Une fois dans le volumes en bas qui etablie la configuration. cette configuration permet de lier les repertoires des machines hotes aux volumes docker assurant la persistance des donnes meme si ceux-la sont supprimes. 
-
-
-
-D'ou vienne les chemins des chaque db dans les services:  
 mariadb_data:/var/lib/mysql 
-wordpress_data:/var/www/html` 
-ce sont des conventions de stockage c'est a dire qu'ils osnt toujours declare comme ceci ou 'est specifique a chaque utilisation?
+wordpress_data:/var/www/html
+    => Ce sont les chemins utilises par defaut pour stocker les donnees

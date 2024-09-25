@@ -28,7 +28,7 @@ services:
     ports: ["80:80"]
     restart: always
     volumes:
-      wp_data:/var/www/html
+      - wp_db:/var/www/html
     environment:
       - WORDPRESS_DB_HOST=db
       - WORDPRESS_DB_USER=wordpress
