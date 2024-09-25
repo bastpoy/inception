@@ -1,17 +1,6 @@
 version: '3'
 
 services:
-  nginx:
-    build: ./requirements/nginx
-    # env_file: ./env.env
-    ports: 
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./nginx:/etc/nginx/conf.d
-      # - ./nginx/certs:/etc/nginx/certs
-    depends_on:
-      - wordpress
 
   wordpress:
     build: ./requirements/wordpress
@@ -35,7 +24,16 @@ services:
       - MYSQL_ROOT_PASSWORD=somewordpress
       - MYSQL_DATABASE=wordpress
       - MYSQL_USER=wordpress
-      - MYSQL_PASSWORD=wordpress    
+      - MYSQL_PASSWORD=wordpress
+  nginx:
+    build: ./requirements/nginx
+    # env_file: ./env.env
+    ports: 
+      - 80:80
+      - 443:443
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+      # - ./nginx/certs:/etc/nginx/certs
 
 volumes:
   db_data:

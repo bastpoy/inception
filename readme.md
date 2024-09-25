@@ -84,8 +84,15 @@ mariadb_data:/var/lib/mysql
 wordpress_data:/var/www/html
     => Ce sont les chemins utilises par defaut pour stocker les donnees
 
-## Configuration file
+## NGINX    
 
-## TLS / SSL
+### TLS / SSL
 
     Crypter les donnees du site. C'est un certificat qui crypte la connection entre l'utilisateur et les serveur. Eviter une fuite de donnee sensible
+
+### REVERSE PROXY
+
+    - Le but permet de securiser notre serveur en ne devoilant pas les addresses ip des erveurs hebergeant notre site.
+    - Assurer une protection en bloquant certaines requetes
+    
+
