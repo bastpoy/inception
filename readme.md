@@ -83,3 +83,9 @@ Permet aux containers de communiquer entre eux et avec le monde exterieur
 mariadb_data:/var/lib/mysql 
 wordpress_data:/var/www/html
     => Ce sont les chemins utilises par defaut pour stocker les donnees
+
+## Configuration file
+
+## TLS / SSL
+
+    Crypter les donnees du site. C'est un certificat qui crypte la connection entre l'utilisateur et les serveur. Eviter une fuite de donnee sensible

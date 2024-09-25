@@ -1,32 +1,20 @@
+version: '3'
+
 services:
-  # nginx:
-  #   container_name : nginx
-  #   image : nginx:mainline
-  #   restart: unless-stopped
-  #   env_file: .env
-  #   port:
-  #     -"443:80"
-  
-  db:
-    # container_name: mariadb
-    image: mariadb:latest
-    command: '--default-authentication-plugin=mysql_native_password'
-    restart: always
-    # env_file: .env
-    expose: # permet d'exposer un port sans le publier sur l'hote. Present dans le docker compose mais pas dans l'hote
-      - 3306
-    environment: # environnement mySQL pour plus de flexibilite avec Wordpress 
-      - MYSQL_ROOT_PASSWORD=somewordpress
-      - MYSQL_DATABASE=wordpress
-      - MYSQL_USER=wordpress
-      - MYSQL_PASSWORD=wordpress    
+  nginx:
+    build: ./requirements/nginx
+    # env_file: ./env.env
+    ports: 
+      - "80:80"
+      - "443:443"
     volumes:
-      - db_data:/var/lib/mysql
+      - ./nginx:/etc/nginx/conf.d
+      # - ./nginx/certs:/etc/nginx/certs
+    depends_on:
+      - wordpress
+
   wordpress:
-    # container_name: wordpress
-    image: wordpress:6.2.1-php8.1-apache
-    ports: ["80:80"]
-    restart: always
+    build: ./requirements/wordpress
     volumes:
       - wp_db:/var/www/html
     environment:
@@ -34,13 +22,29 @@ services:
       - WORDPRESS_DB_USER=wordpress
       - WORDPRESS_DB_PASSWORD=wordpress
       - WORDPRESS_DB_NAME=wordpress
+    depends_on:
+      - db
+  db:
+    build: ./requirements/mariadb
+    volumes:
+      - db_data:/var/lib/mysql
+    command: '--default-authentication-plugin=mysql_native_password'
+    expose: # permet d'exposer un port sans le publier sur l'hote. Present dans le docker compose mais pas dans l'hote
+      - 3306
+    environment: # environnement mySQL pour plus de flexibilite avec Wordpress 
+      - MYSQL_ROOT_PASSWORD=somewordpress
+      - MYSQL_DATABASE=wordpress
+      - MYSQL_USER=wordpress
+      - MYSQL_PASSWORD=wordpress    
+
 volumes:
   db_data:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /home/bpoyet/data/mariadb    
+      device: /home/bpoyet/data/mariadb
+
   wp_db:
     driver: local
     driver_opts:
