@@ -20,6 +20,8 @@
     => -t nom de l'image
     => le dernier parametre: localisation du dockerfile => '.' pour le current directory
 - docker system prune nettoyer tous les dockers en cours automatiquement
+- sudo service apache2 stop && sudo service nginx stop => quand le port est busy
+- sudo systemctl status nginx => voir si nginx run
 
 ## LES MOTS CLES DANS LE DOCKERFILE
 
@@ -94,5 +96,5 @@ wordpress_data:/var/www/html
 
     - Le but permet de securiser notre serveur en ne devoilant pas les addresses ip des erveurs hebergeant notre site.
     - Assurer une protection en bloquant certaines requetes
-    
+
 
