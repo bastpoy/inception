@@ -27,8 +27,13 @@ services:
     build: ./requirements/nginx
     # env_file: ./env.env
     ports: 
-      - 8080:80
-      - 443:443
+      - "8080:80"
+      - "443:443"
+    volumes:
+      # - ./requirements/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - wp_db:/var/www/html
+    depends_on:
+      - wordpress
     # volumes:
       # - ./nginx:/etc/nginx/conf.d
       # - ./nginx/certs:/etc/nginx/certs

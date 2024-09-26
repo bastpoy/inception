@@ -88,6 +88,9 @@ wordpress_data:/var/www/html
 
 ## NGINX    
 
+- http : inclue les directives pour le trafic web
+- server_name : permet de d'autoriser certains sites a s'afficher => dans notre exemple le site est bpoyet.42.fr
+
 ### TLS / SSL
 
     Crypter les donnees du site. C'est un certificat qui crypte la connection entre l'utilisateur et les serveur. Eviter une fuite de donnee sensible
