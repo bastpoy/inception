@@ -13,6 +13,9 @@ services:
     restart: always
     # ports:
     #   - "8000:80"
+    networks:
+      - wp-networks
+
   mariadb:
     build: ./requirements/mariadb
     volumes:
@@ -35,18 +38,20 @@ services:
     env_file: ./env.env
     ports: 
       - "443:80"
+      # - "8080:80"
     depends_on:
       - wordpress
       - mariadb
     volumes:
       - ./requirements/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - wordpress:/var/www/html
-      - mariadb:/var/lib/mysql
       # - word:/var/www/html
       # - db_data:/var/lib/mysql
       # - ./nginx:/etc/nginx/conf.d
       # - ./nginx/certs:/etc/nginx/certs
       # - ./debug.conf:/etc/nginx/nginx.conf
+    networks:
+      - wp-networks
 
 volumes:
   mariadb:
@@ -62,3 +67,7 @@ volumes:
       type: none
       o: bind
       device: /home/bpoyet/data/wordpress
+
+networks:
+  wp-networks:
+    driver: bridge
