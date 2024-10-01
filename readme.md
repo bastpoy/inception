@@ -57,6 +57,13 @@ Sur de gros projets avec enormement de container le docker-compose va nous evite
 - port:
     80-8080 => le port 8080 dans le docker est relier au port 80 de la machine host
 
+## DOCKER-NETWORK
+
+- **docker network ls** : liste tous les docker network
+- **docker inspect <name_network>** : inspecter un reseau
+- **docker network prune** : Supprimer tous les networks en cours
+- L'installation d'un docker creer une nouvelle interface reseau a partir de la carte reseau de notre pc local.
+
 ### Commandes
 
 - version version du docker-compose
@@ -85,9 +92,11 @@ Permet aux containers de communiquer entre eux et avec le monde exterieur
 - Dans mon Docker-compose j'utilise une base de donnee mariadb mais j'utilise des informations d'authentification propre a mySQL car ceci assure la compatibilite avec WordPress et la flexibilite la configuration de la base de donnee.
 - Quand je cree un volume par exemple pour Wordpress celui-ci va stocker les fichiers de la base de donnee Wordpress. cela permet de stocker les donnees en dehors du conteneur et de les reutiliser facilement.
     => le volume est "declare" deux fois. Une fois dans le volumes en bas qui etablie la configuration. cette configuration permet de lier les repertoires des machines hotes aux volumes docker assurant la persistance des donnes meme si ceux-la sont supprimes. 
-mariadb_data:/var/lib/mysql 
-wordpress_data:/var/www/html
+- mariadb_data:/var/lib/mysql 
+- wordpress_data:/var/www/html
     => Ce sont les chemins utilises par defaut pour stocker les donnees
+- WORDPRESS_DB_USER le meme que MYSQL_USER
+- WORDPRESS_DB_PASSWORD le meme que MYSQL_PASSWORD
 
 ## NGINX    
 
