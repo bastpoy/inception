@@ -105,7 +105,12 @@ Permet aux containers de communiquer entre eux et avec le monde exterieur
 
 ### TLS / SSL
 
-    Crypter les donnees du site. C'est un certificat qui crypte la connection entre l'utilisateur et les serveur. Eviter une fuite de donnee sensible
+    - Crypter les donnees du site. C'est un certificat qui crypte la connection entre l'utilisateur et les serveur. Eviter une fuite de donnee sensible
+    - **Certificat crt path** : usr/local/share/ca-certificates
+    - .key : private key
+    - .pem : public key
+    - .crt : certificate
+
 
 ### REVERSE PROXY
 

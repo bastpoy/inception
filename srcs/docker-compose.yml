@@ -1,22 +1,19 @@
 services:
   nginx:
-    build: ./requirements/nginx
-    env_file: .env
-    ports: 
-      - "443:80"
-      # - "8080:80"
     depends_on:
       - wordpress
       - mariadb
+    build: ./requirements/nginx
+    env_file: .env
+    ports: 
+      - "443:443"
     volumes:
-      - ./requirements/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - wordpress:/var/www/html
+      # - mariadb:/var/lib/mysql
+      # - ./requirements/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - /etc/ssl/certs/:/etc/nginx/certs:ro
       - /etc/ssl/private:/etc/nginx/private:ro
-      - wordpress:/var/www/html
       # - db_data:/var/lib/mysql
-      # - ./nginx:/etc/nginx/conf.d
-      # - ./nginx/certs:/etc/nginx/certs
-      # - ./debug.conf:/etc/nginx/nginx.conf
     networks:
       - wp-networks
 
@@ -34,8 +31,6 @@ services:
       - mariadb
     expose:
       - "9000"
-    # ports:
-    #   - "8000:9000"
     networks:
       - wp-networks
 
@@ -43,20 +38,17 @@ services:
     build: ./requirements/mariadb
     env_file: .env
     volumes:
-      # - db_data:/var/lib/mysql
       - mariadb:/var/lib/mysql
     restart: always
-    # command: '--default-authentication-plugin=mysql_native_password'
     expose: 
       - 3306
-    # ports:
-    #   - "3306:3306"
-    environment: # environnement mySQL pour plus de flexibilite avec Wordpress 
+    ports:
+      - "3306:3306"
+    environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      # MARIADB_ROOT_PASSWORD: example
     networks:
       - wp-networks
 
