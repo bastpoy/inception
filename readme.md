@@ -25,20 +25,22 @@
 - **docker-compose exec wordpress mount | grep "/var/www/html"** => verifier que mon volume est bien monte
 - **docker-compose exec wordpress ls -la /var/www/html** => verifier le contenu d'un repertoire du docker
 - **docker-compose exec wordpress /bin/bash** => Ceci permet d'acceder au repertoire du conteneur specifie ici wordpress. je l'ouvre dans bash
+- **sudo systemctl stop docker** : arreter docker
+- **sudo systemctl start docker** : lancer docker
 
 ## LES MOTS CLES DANS LE DOCKERFILE
 
-- FROM: permet de donner le point de depart de notre build.
-- RUN tout ce qui suit run equivaut a une commande bash dans l'environnement du container 
+- **FROM**: permet de donner le point de depart de notre build.
+- **RUN** tout ce qui suit run equivaut a une commande bash dans l'environnement du container 
     => commande effectuer dans le container
-- COPY: copier des fichier de l'host vers le container
+- **COPY**: copier des fichier de l'host vers le container
     => commande effectuer dans le host
-- WORKDIR : permet de changer le directory pour les futurs commandes
-- CMD : similaire a RUN mais ce qui suit sera la derniere commande a executer pour lancer l'executable.
-- USER permet de modifier l'utilisateur pour les prochaines commandes
-- ENV: ajouter des variables d'environnement
-- EXPOSE : exposer un port vers l'exterieur
-- VOLUME : monter un stockage pour partager de la donnee entre container
+- **WORKDIR** : permet de changer le directory pour les futurs commandes
+- **CMD** : similaire a RUN mais ce qui suit sera la derniere commande a executer pour lancer l'executable.
+- **USER** permet de modifier l'utilisateur pour les prochaines commandes
+- **ENV** ajouter des variables d'environnement
+- **EXPOSE** : exposer un port vers l'exterieur
+- **VOLUME** : monter un stockage pour partager de la donnee entre container
 
 ## AUTRE
 
@@ -118,3 +120,8 @@ Permet aux containers de communiquer entre eux et avec le monde exterieur
     - Assurer une protection en bloquant certaines requetes
 
 
+# TACHES
+
+- refaire tous les dockerfile
+- reduire les volumes dans le docker compose
+- Voir comment changer ma base de donnee pour ajouter un utilisateur

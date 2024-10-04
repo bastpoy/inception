@@ -7,12 +7,14 @@ services:
     env_file: .env
     ports: 
       - "443:443"
+      # - "8080:80"
     volumes:
       - wordpress:/var/www/html
       # - mariadb:/var/lib/mysql
-      # - ./requirements/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-      - /etc/ssl/certs/:/etc/nginx/certs:ro
-      - /etc/ssl/private:/etc/nginx/private:ro
+      - ./requirements/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      # - /etc/ssl/certs/:/etc/nginx/certs:ro
+      # - /etc/ssl/private:/etc/nginx/private:ro
+      - .:/etc/nginx/certs:ro
       # - db_data:/var/lib/mysql
     networks:
       - wp-networks
@@ -58,14 +60,14 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /home/bpoyet/data/mariadb
+      device: /home/bastpoy/data/mariadb
 
   wordpress:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /home/bpoyet/data/wordpress
+      device: /home/bastpoy/data/wordpress
 
 networks:
   wp-networks:
