@@ -119,7 +119,12 @@ Permet aux containers de communiquer entre eux et avec le monde exterieur
     - Le but permet de securiser notre serveur en ne devoilant pas les addresses ip des erveurs hebergeant notre site.
     - Assurer une protection en bloquant certaines requetes
 
+## TOUT SUPPRIMER ET TOUT REBUILD
 
+- docker compose down
+- docker compose down -v => remove volumes
+- docker rm -f $(docker ps -a -q) => removes all container even those not related to current setup
+- docker system prune -a --volumes => -a remove all unused images --volumes clean up volumes
 # TACHES
 
 - refaire tous les dockerfile
