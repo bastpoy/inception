@@ -28,6 +28,7 @@
 - **sudo systemctl stop docker** : arreter docker
 - **sudo systemctl start docker** : lancer docker
 
+
 ## LES MOTS CLES DANS LE DOCKERFILE
 
 - **FROM**: permet de donner le point de depart de notre build.
@@ -124,7 +125,10 @@ Permet aux containers de communiquer entre eux et avec le monde exterieur
 - docker compose down
 - docker compose down -v => remove volumes
 - docker rm -f $(docker ps -a -q) => removes all container even those not related to current setup
+- docker rm -v -f $(docker ps -qa) => removes also the volumes
 - docker system prune -a --volumes => -a remove all unused images --volumes clean up volumes
+- docker compose down -v && docker rm -f $(docker ps -a -q) && docker system prune -a --volumes
+
 # TACHES
 
 - refaire tous les dockerfile
