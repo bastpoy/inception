@@ -128,9 +128,13 @@ Permet aux containers de communiquer entre eux et avec le monde exterieur
 - docker rm -v -f $(docker ps -qa) => removes also the volumes
 - docker system prune -a --volumes => -a remove all unused images --volumes clean up volumes
 - docker compose down -v && docker rm -f $(docker ps -a -q) && docker system prune -a --volumes
-
+- docker stop $(docker ps -qa); docker rm $(docker ps -qa); docker rmi -f $(docker images -qa); docker volume rm $(docker volume ls -q); docker network rm $(docker network ls -q)
+- docker rmi $(docker images -a -q) remove all images
 # TACHES
 
-- refaire tous les dockerfile
-- reduire les volumes dans le docker compose
+- conf dans wordpress????
+- enlever le volume dans nginx et openssl au build de l'image pour cert et key
 - Voir comment changer ma base de donnee pour ajouter un utilisateur
+- gerer le PID dans le conf file de mariadb
+- autoriser seulement le port 443.
+- Faire le makefile
