@@ -21,27 +21,22 @@ touch $DEBUG_LOG
 chown www-data:www-data $DEBUG_LOG
 chmod 664 $DEBUG_LOG
 
-cat << EOF >> $WP_CONFIG_FINAL
+# Install WP-CLI if not already installed
+if ! command -v wp &> /dev/null
+then
+    curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+    chmod +x wp-cli.phar
+    mv wp-cli.phar /usr/local/bin/wp
+fi
 
-// Enable debugging
-define( 'WP_DEBUG', true );
-define( 'WP_DEBUG_LOG', true );
-define( 'WP_DEBUG_DISPLAY', false );
-@ini_set( 'display_errors', 0 );
-
-// Test database connection
-\$connection = mysqli_connect('$DB_HOST', '$DB_USER', '$DB_PASSWORD', '$DB_NAME');
-if (!\$connection) {
-    error_log("Database connection failed: " . mysqli_connect_error());
-    die("Database connection failed. Check your configuration.");
-}
-mysqli_close(\$connection);
-EOF
-
-# printf "\n\
-# define( 'WP_DEBUG', true ); \n\
-# define( 'WP_DEBUG_LOG', true ); \n\
-# define( 'WP_DEBUG_DISPLAY', false ); \n\
-# " >> /var/www/html/wp-config.php
+# Install WordPress using WP-CLI
+wp core install --path="/var/www/html" \
+    --url="${WORDPRESS_URL}" \
+    --title="Inception" \
+    --admin_user="${WORDPRESS_ADMIN_USER}" \
+    --admin_password="${WORDPRESS_ADMIN_PASSWORD}" \
+    --admin_email="${WORDPRESS_ADMIN_EMAIL}" \
+    --skip-email\
+    --allow-root
 
 exec php-fpm7.4 -F

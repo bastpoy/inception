@@ -100,6 +100,7 @@ Permet aux containers de communiquer entre eux et avec le monde exterieur
     => Ce sont les chemins utilises par defaut pour stocker les donnees
 - WORDPRESS_DB_USER le meme que MYSQL_USER
 - WORDPRESS_DB_PASSWORD le meme que MYSQL_PASSWORD
+- docker compose exec -it mariadb mysql -u root -p => se connecter a ma base de donnee
 
 ## NGINX    
 
@@ -130,6 +131,7 @@ Permet aux containers de communiquer entre eux et avec le monde exterieur
 - docker compose down -v && docker rm -f $(docker ps -a -q) && docker system prune -a --volumes
 - docker stop $(docker ps -qa); docker rm $(docker ps -qa); docker rmi -f $(docker images -qa); docker volume rm $(docker volume ls -q); docker network rm $(docker network ls -q)
 - docker rmi $(docker images -a -q) remove all images
+
 # TACHES
 
 - conf dans wordpress????

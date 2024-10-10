@@ -43,11 +43,11 @@ services:
       - 3306
     ports:
       - "3306:3306"
-    environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    # environment:
+    #   MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    #   MYSQL_DATABASE: ${MYSQL_DATABASE}
+    #   MYSQL_USER: ${MYSQL_USER}
+    #   MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     networks:
       - wp-networks
 
@@ -57,14 +57,14 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /home/bastpoy/data/mariadb
+      device: /home/bpoyet/data/mariadb
 
   wordpress:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /home/bastpoy/data/wordpress
+      device: /home/bpoyet/data/wordpress
 
 networks:
   wp-networks:

@@ -16,7 +16,6 @@ RUN chown -R mysql:mysql /var/lib/mysql
 
 # Copy the entrypoint script
 COPY ./tools/tools.sh /usr/local/bin/
-
 # Make the script executable
 RUN chmod +x /usr/local/bin/tools.sh
 
