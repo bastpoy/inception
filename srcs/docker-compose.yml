@@ -43,11 +43,11 @@ services:
       - 3306
     ports:
       - "3306:3306"
-    # environment:
-    #   MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-    #   MYSQL_DATABASE: ${MYSQL_DATABASE}
-    #   MYSQL_USER: ${MYSQL_USER}
-    #   MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s       # Wait 10 seconds between checks
+      timeout: 5s         # Consider it failed if no response within 5 seconds
+      retries: 5  
     networks:
       - wp-networks
 

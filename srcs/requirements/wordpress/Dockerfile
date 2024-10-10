@@ -6,6 +6,7 @@ RUN apt-get update && apt-get install -y \
     php7.4 \
     php7.4-fpm \
     php7.4-mysql \
+    mariadb-server \
     # php7.4-curl \
     # php7.4-gd \
     # php7.4-intl \

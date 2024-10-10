@@ -29,7 +29,9 @@ then
     mv wp-cli.phar /usr/local/bin/wp
 fi
 
-# Install WordPress using WP-CLI
+mysql -u root -p"${MYSQL_ROOT_PASSWORD}" --console
+
+# Create admin user
 wp core install --path="/var/www/html" \
     --url="${WORDPRESS_URL}" \
     --title="Inception" \
@@ -38,5 +40,11 @@ wp core install --path="/var/www/html" \
     --admin_email="${WORDPRESS_ADMIN_EMAIL}" \
     --skip-email\
     --allow-root
+
+# Create user
+wp user create bob maildebob@rien.com \
+    --user_pass="${WORDPRESS_USERPASS}"\
+    --allow-root
+
 
 exec php-fpm7.4 -F

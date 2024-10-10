@@ -50,3 +50,4 @@ fi
 
 echo "Starting MariaDB server..."
 exec mysqld --user=mysql --console
+# exec mysqld --user=root --console
