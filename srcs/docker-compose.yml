@@ -57,14 +57,14 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /home/bpoyet/data/mariadb
+      device: /home/bastpoy/data/mariadb
 
   wordpress:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /home/bpoyet/data/wordpress
+      device: /home/bastpoy/data/wordpress
 
 networks:
   wp-networks:
