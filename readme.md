@@ -98,14 +98,16 @@ Permet aux containers de communiquer entre eux et avec le monde exterieur
 - mariadb_data:/var/lib/mysql 
 - wordpress_data:/var/www/html
     => Ce sont les chemins utilises par defaut pour stocker les donnees
-- WORDPRESS_DB_USER le meme que MYSQL_USER
-- WORDPRESS_DB_PASSWORD le meme que MYSQL_PASSWORD
-- docker compose exec -it mariadb mysql -u root -p => se connecter a ma base de donnee
+- **WORDPRESS_DB_USER** le meme que MYSQL_USER
+- **WORDPRESS_DB_PASSWORD** le meme que MYSQL_PASSWORD
+- **docker compose exec -it mariadb mysql -u root -p** => se connecter a ma base de donnee
+- **mysql –u user_name –p** : autre methode de connexion depuis le container
 
 ## NGINX    
 
-- http : inclue les directives pour le trafic web
-- server_name : permet de d'autoriser certains sites a s'afficher => dans notre exemple le site est bpoyet.42.fr
+- **http** : inclue les directives pour le trafic web
+- **server_name** : permet de d'autoriser certains sites a s'afficher => dans notre exemple le site est bpoyet.42.fr
+- **server** va ecouter sur une IP/domaine ou port specifique pour renvoyer le bon fichier
 
 ### TLS / SSL
 
@@ -134,9 +136,5 @@ Permet aux containers de communiquer entre eux et avec le monde exterieur
 
 # TACHES
 
-- conf dans wordpress????
-- enlever le volume dans nginx et openssl au build de l'image pour cert et key
-- Voir comment changer ma base de donnee pour ajouter un utilisateur
 - gerer le PID dans le conf file de mariadb
-- autoriser seulement le port 443.
 - Faire le makefile

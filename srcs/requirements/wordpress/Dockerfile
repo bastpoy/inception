@@ -1,4 +1,3 @@
-# FROM wordpress:6.2.1-php8.1-fpm
 FROM debian:bullseye
 
 # Install dependencies
@@ -7,13 +6,6 @@ RUN apt-get update && apt-get install -y \
     php7.4-fpm \
     php7.4-mysql \
     mariadb-server \
-    # php7.4-curl \
-    # php7.4-gd \
-    # php7.4-intl \
-    # php7.4-mbstring \
-    # php7.4-soap \
-    # php7.4-xml \
-    # php7.4-zip \
     wget \
     unzip \
     curl \
@@ -28,6 +20,7 @@ RUN mkdir -p /var/www/html /run/php
 RUN chown -R www-data:www-data /var/www/html /run/php
 RUN chmod -R 755 /var/www/html
 
+#install wordpress
 RUN wget https://wordpress.org/latest.zip -O /tmp/wordpress.zip && \
     unzip /tmp/wordpress.zip -d /tmp && \
     mv /tmp/wordpress/* /var/www/html/ && \

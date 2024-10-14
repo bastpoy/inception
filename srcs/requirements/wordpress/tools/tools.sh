@@ -29,7 +29,7 @@ then
     mv wp-cli.phar /usr/local/bin/wp
 fi
 
-mysql -u root -p"${MYSQL_ROOT_PASSWORD}" --console
+# mysql -u root -p"${MYSQL_ROOT_PASSWORD}" --console
 
 # Create admin user
 wp core install --path="/var/www/html" \
@@ -42,9 +42,14 @@ wp core install --path="/var/www/html" \
     --allow-root
 
 # Create user
-wp user create bob maildebob@rien.com \
-    --user_pass="${WORDPRESS_USERPASS}"\
+if ! wp user get bob --allow-root &>/dev/null; then
+    # User doesn't exist, so create it
+    wp user create bob maildebob@rien.com \
+    --user_pass="${WORDPRESS_USERPASS}" \
     --allow-root
-
+    echo "User 'bob' created successfully."
+else
+    echo "User 'bob' already exists. Skipping creation."
+fi
 
 exec php-fpm7.4 -F
