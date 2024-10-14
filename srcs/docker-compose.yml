@@ -18,14 +18,9 @@ services:
     env_file: .env
     volumes:
       - wordpress:/var/www/html
-    environment:
-      WORDPRESS_DB_HOST: ${WORDPRESS_DB_HOST}
-      WORDPRESS_DB_USER: ${MYSQL_USER}
-      WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
-      WORDPRESS_DB_NAME: ${MYSQL_DATABASE}
     depends_on:
-      mariadb:
-        condition: service_healthy
+      - mariadb
+        # condition: service_healthy
     expose:
       - "9000"
     networks:
@@ -34,13 +29,13 @@ services:
   mariadb:
     build: ./requirements/mariadb
     env_file: .env
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-    # volumes:
-    #   - mariadb:/var/lib/mysql
+    # healthcheck:
+    #   test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+    #   interval: 10s
+    #   timeout: 5s
+    #   retries: 5
+    volumes:
+      - mariadb:/var/lib/mysql
     restart: always
     expose: 
       - 3306
@@ -55,14 +50,14 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /home/bastpoy/data/mariadb
+      device: /home/bpoyet/data/mariadb
 
   wordpress:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /home/bastpoy/data/wordpress
+      device: /home/bpoyet/data/wordpress
 
 networks:
   wp-networks:

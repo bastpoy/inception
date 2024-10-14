@@ -21,6 +21,7 @@ touch $DEBUG_LOG
 chown www-data:www-data $DEBUG_LOG
 chmod 664 $DEBUG_LOG
 
+
 # Install WP-CLI if not already installed
 if ! command -v wp &> /dev/null
 then

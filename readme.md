@@ -103,6 +103,13 @@ Permet aux containers de communiquer entre eux et avec le monde exterieur
 - **docker compose exec -it mariadb mysql -u root -p** => se connecter a ma base de donnee
 - **mysql –u user_name –p** : autre methode de connexion depuis le container
 
+### COMMAND INSIDE MARIADB DATABASE
+
+- **SELECT User, Host FROM user** : selectionner tous les utilisateurs
+- **SELECT User, Host FROM mysql.user;** : recuperer tous les utilisateurs 
+- **show grants for 'vivek'@'%';** : avoir les privileges
+- **show databases;** : montrer les bases de donnee
+
 ## NGINX    
 
 - **http** : inclue les directives pour le trafic web

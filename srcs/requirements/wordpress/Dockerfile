@@ -9,6 +9,7 @@ RUN apt-get update && apt-get install -y \
     wget \
     unzip \
     curl \
+    iputils-ping \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
