@@ -7,10 +7,6 @@ chmod 644 /etc/mysql/mariadb.conf.d/50-server.cnf
 sed -i "s/127.0.0.1/0.0.0.0/" /etc/mysql/mariadb.conf.d/50-server.cnf
 
 # Initialize the MySQL data directory if it's empty
-# if [ ! -d "/var/lib/mysql/mysql" ]; then
-# echo "Initializing MariaDB data directory..."
-# mysql_install_db --user=mysql --datadir=/var/lib/mysql
-
 if [ ! -d "/var/lib/mysql/mysql" ]; then
     echo "Initializing MariaDB data directory..."
     mysql_install_db --datadir=/var/lib/mysql

@@ -3,6 +3,7 @@ services:
     depends_on:
       - wordpress
     build: ./requirements/nginx
+    image: nginx
     env_file: .env
     ports: 
       - "443:443"
@@ -15,12 +16,13 @@ services:
 
   wordpress:
     build: ./requirements/wordpress
+    image: wordpress
     env_file: .env
     volumes:
       - wordpress:/var/www/html
     depends_on:
       - mariadb
-        # condition: service_healthy
+      - redis
     expose:
       - "9000"
     networks:
@@ -29,11 +31,7 @@ services:
   mariadb:
     build: ./requirements/mariadb
     env_file: .env
-    # healthcheck:
-    #   test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-    #   interval: 10s
-    #   timeout: 5s
-    #   retries: 5
+    image: mariadb
     volumes:
       - mariadb:/var/lib/mysql
     restart: always
@@ -43,6 +41,35 @@ services:
       - "3306:3306"
     networks:
       - wp-networks
+  
+  redis:
+    build: ./requirements/bonus/redis
+    image: redis
+    ports:
+      - '6379:6379'
+    restart: always
+    expose:
+      - '6379'
+    networks:
+      - wp-networks
+
+  ftp:
+    build: ./requirements/bonus/ftp
+    image: ftp
+    restart: always
+    networks:
+      - wp-networks
+    volumes:
+      - wordpress:/home/vsftpd:ro
+    ports:
+      - "21:21"
+      - "21100-21110:21100-21110"
+    environment:
+      - FTP_USER=ftp
+      - FTP_PASS=ftp
+      - PASV_ADDRESS=127.0.0.1
+      - PASV_MIN_PORT=21100
+      - PASV_MAX_PORT=21110
 
 volumes:
   mariadb:

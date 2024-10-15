@@ -109,6 +109,10 @@ Permet aux containers de communiquer entre eux et avec le monde exterieur
 - **SELECT User, Host FROM mysql.user;** : recuperer tous les utilisateurs 
 - **show grants for 'vivek'@'%';** : avoir les privileges
 - **show databases;** : montrer les bases de donnee
+- **use <database_name>** : changer de base de donnee
+- **select <field> from <table> : afficher tous les champs d'un tableau
+    - post_title wp_posts
+    - user_login wp_user
 
 ## NGINX    
 
@@ -132,16 +136,18 @@ Permet aux containers de communiquer entre eux et avec le monde exterieur
 
 ## TOUT SUPPRIMER ET TOUT REBUILD
 
-- docker compose down
-- docker compose down -v => remove volumes
-- docker rm -f $(docker ps -a -q) => removes all container even those not related to current setup
-- docker rm -v -f $(docker ps -qa) => removes also the volumes
-- docker system prune -a --volumes => -a remove all unused images --volumes clean up volumes
-- docker compose down -v && docker rm -f $(docker ps -a -q) && docker system prune -a --volumes
-- docker stop $(docker ps -qa); docker rm $(docker ps -qa); docker rmi -f $(docker images -qa); docker volume rm $(docker volume ls -q); docker network rm $(docker network ls -q)
-- docker rmi $(docker images -a -q) remove all images
+- **docker compose down**
+- **docker compose down -v** => remove volumes
+- **docker rm -f $(docker ps -a -q)** => removes all container even those not related to current setup
+- **docker rm -v -f $(docker ps -qa)** => removes also the volumes
+- **docker system prune -a --volumes** => -a remove all unused images --volumes clean up volumes
+- **docker compose down -v && docker rm -f $(docker ps -a -q) && docker system prune -a --volumes**
+- **docker stop $(docker ps -qa); docker rm $(docker ps -qa); docker rmi -f $(docker images -qa); docker volume rm $(docker volume ls -q); docker network rm $(docker network ls -q)**
+- **docker rmi $(docker images -a -q)** remove all images
+- **sudo service docker restart** redemarrer docker quand j'arriv pas a build les images
 
 # TACHES
 
 - gerer le PID dans le conf file de mariadb
 - Faire le makefile
+- volume nginx

@@ -28,6 +28,11 @@ RUN wget https://wordpress.org/latest.zip -O /tmp/wordpress.zip && \
     chown -R www-data:www-data /var/www/html && \
     rm /tmp/wordpress.zip && rm -rf /tmp/wordpress
 
+# Install Redis Object Cache plugin
+RUN curl -o /tmp/redis-cache.zip -fSL "https://downloads.wordpress.org/plugin/redis-cache.latest-stable.zip" \
+    && unzip /tmp/redis-cache.zip -d /var/www/html/wp-content/plugins/ \
+    && rm /tmp/redis-cache.zip
+
 # create tools script 
 COPY ./tools/tools.sh /usr/local/bin/
 
