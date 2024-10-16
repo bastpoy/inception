@@ -10,6 +10,7 @@ services:
       - "80:80"
     volumes:
       - wordpress:/var/www/html
+      # - website:/var/www/website
       - ../secrets:/etc/nginx/certs:ro
     networks:
       - wp-networks
@@ -52,17 +53,28 @@ services:
     networks:
       - wp-networks
 
-  ftp:
-    build: ./requirements/bonus/ftp
-    image: ftp
+  website:
+    build: ./requirements/bonus/website
+    image: website
     restart: always
+    ports: 
+      - "8080:8080"
+    volumes:
+      - website:/var/www/website
     networks:
       - wp-networks
-    volumes:
-      - wordpress:/srv/ftp:ro
-    ports:
-      - "21:21"
-      - "21100-21110:21100-21110"
+
+  # ftp:
+  #   build: ./requirements/bonus/ftp
+  #   image: ftp
+  #   restart: always
+  #   networks:
+  #     - wp-networks
+  #   volumes:
+  #     - wordpress:/srv/ftp:ro
+  #   ports:
+  #     - "21:21"
+  #     - "21100-21110:21100-21110"
 
 volumes:
   mariadb:
@@ -70,14 +82,21 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /home/bpoyet/data/mariadb
+      device: /home/bastpoy/data/mariadb
 
   wordpress:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /home/bpoyet/data/wordpress
+      device: /home/bastpoy/data/wordpress
+
+  website:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/bastpoy/data/website
 
 networks:
   wp-networks:
