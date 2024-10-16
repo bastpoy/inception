@@ -9,6 +9,11 @@ DB_PASSWORD=${MYSQL_PASSWORD}
 DB_HOST=${WORDPRESS_DB_HOST}
 WP_CACHE_KEY_SALT=$(openssl rand -base64 32)
 
+until redis-cli -h redis ping | grep -q PONG; do
+  echo "Waiting for Redis to initialize..."
+  sleep 1
+done
+
 cp /var/www/html/wp-config-sample.php /var/www/html/wp-config.php
 chmod 644 $WP_CONFIG_FINAL
 
@@ -23,6 +28,12 @@ echo "define('WP_CACHE_KEY_SALT', '$WP_CACHE_KEY_SALT');" >> $WP_CONFIG_FINAL
 echo "define('WP_REDIS_HOST', 'redis');" >> $WP_CONFIG_FINAL
 echo "define('WP_REDIS_PORT', 6379);" >> $WP_CONFIG_FINAL
 echo "define('WP_CACHE', true);" >> $WP_CONFIG_FINAL
+
+# Additional Redis configuration
+echo "define('WP_REDIS_DATABASE', 0);" >> $WP_CONFIG_FINAL
+echo "define('WP_REDIS_TIMEOUT', 1);" >> $WP_CONFIG_FINAL
+echo "define('WP_REDIS_READ_TIMEOUT', 1);" >> $WP_CONFIG_FINAL
+echo "define('WP_REDIS_PASSWORD', 'your_redis_password');" >> $WP_CONFIG_FINAL
 
 DEBUG_LOG="/var/www/html/wp-content/debug.log"
 touch $DEBUG_LOG
