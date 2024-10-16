@@ -22,7 +22,6 @@ services:
       - wordpress:/var/www/html
     depends_on:
       - mariadb
-      - redis
     expose:
       - "9000"
     networks:
@@ -45,9 +44,9 @@ services:
   redis:
     build: ./requirements/bonus/redis
     image: redis
+    restart: always
     ports:
       - '6379:6379'
-    restart: always
     expose:
       - '6379'
     networks:
@@ -60,16 +59,10 @@ services:
     networks:
       - wp-networks
     volumes:
-      - wordpress:/home/vsftpd:ro
+      - wordpress:/srv/ftp:ro
     ports:
       - "21:21"
       - "21100-21110:21100-21110"
-    environment:
-      - FTP_USER=ftp
-      - FTP_PASS=ftp
-      - PASV_ADDRESS=127.0.0.1
-      - PASV_MIN_PORT=21100
-      - PASV_MAX_PORT=21110
 
 volumes:
   mariadb:
@@ -77,14 +70,14 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /home/bastpoy/data/mariadb
+      device: /home/bpoyet/data/mariadb
 
   wordpress:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /home/bastpoy/data/wordpress
+      device: /home/bpoyet/data/wordpress
 
 networks:
   wp-networks:

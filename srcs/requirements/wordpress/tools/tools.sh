@@ -7,12 +7,12 @@ DB_NAME=${MYSQL_DATABASE}
 DB_USER=${MYSQL_USER}
 DB_PASSWORD=${MYSQL_PASSWORD}
 DB_HOST=${WORDPRESS_DB_HOST}
-WP_CACHE_KEY_SALT=$(openssl rand -base64 32)
 
-until redis-cli -h redis ping | grep -q PONG; do
-  echo "Waiting for Redis to initialize..."
-  sleep 1
+echo "Waiting for MariaDB to be ready..."
+until mysql -h"$WORDPRESS_DB_HOST" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -e "SELECT 1"; do
+    sleep 1
 done
+echo "MariaDB is ready."
 
 cp /var/www/html/wp-config-sample.php /var/www/html/wp-config.php
 chmod 644 $WP_CONFIG_FINAL
@@ -22,18 +22,20 @@ sed -i "s/username_here/$DB_USER/" $WP_CONFIG_FINAL
 sed -i "s/password_here/$DB_PASSWORD/" $WP_CONFIG_FINAL
 sed -i "s/localhost/$DB_HOST/" $WP_CONFIG_FINAL
 
-echo "define('WP_CACHE_KEY_SALT', '$WP_CACHE_KEY_SALT');" >> $WP_CONFIG_FINAL
+#Create a temporary file with the lines to be inserted
+cat <<EOL > redis-config.tmp
+define('WP_CACHE_KEY_SALT', 'bpoyet.42.fr');
+define('WP_REDIS_HOST', 'redis');
+define('WP_REDIS_PORT', 6379);
+define('WP_CACHE', true);
+define('WP_REDIS_DATABASE', 0);
+define('WP_REDIS_TIMEOUT', 1);
+define('WP_REDIS_READ_TIMEOUT', 1);
+EOL
 
-# Enable Redis Object Cache
-echo "define('WP_REDIS_HOST', 'redis');" >> $WP_CONFIG_FINAL
-echo "define('WP_REDIS_PORT', 6379);" >> $WP_CONFIG_FINAL
-echo "define('WP_CACHE', true);" >> $WP_CONFIG_FINAL
-
-# Additional Redis configuration
-echo "define('WP_REDIS_DATABASE', 0);" >> $WP_CONFIG_FINAL
-echo "define('WP_REDIS_TIMEOUT', 1);" >> $WP_CONFIG_FINAL
-echo "define('WP_REDIS_READ_TIMEOUT', 1);" >> $WP_CONFIG_FINAL
-echo "define('WP_REDIS_PASSWORD', 'your_redis_password');" >> $WP_CONFIG_FINAL
+# Insert the lines from the temporary file into the target file at line 50
+sed -i '85r redis-config.tmp' $WP_CONFIG_FINAL
+rm redis-config.tmp
 
 DEBUG_LOG="/var/www/html/wp-content/debug.log"
 touch $DEBUG_LOG

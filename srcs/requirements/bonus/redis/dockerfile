@@ -5,4 +5,10 @@ RUN apt-get update && \
     apt-get clean  && \
     rm -rf /var/lib/apt/lists/*
 
-CMD ["redis-server", "--protected-mode no"]
+COPY ./redis.sh /usr/local/bin
+
+RUN chmod +x /usr/local/bin/redis.sh
+
+ENTRYPOINT ["/usr/local/bin/redis.sh"]
+
+# CMD ["redis-server", "--protected-mode no"]

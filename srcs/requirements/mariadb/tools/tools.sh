@@ -21,8 +21,9 @@ chown -R mysql:mysql /run/mysqld /var/lib/mysql
 mysqld --datadir=/var/lib/mysql &
 pid="$!"
 
-while ! mysqladmin ping --silent; do
-    sleep 1
+until mysqladmin ping --silent; do
+    echo "Waiting for MariaDB to be ready..."
+    sleep 2
 done
 
 # Secure the MariaDB installation
