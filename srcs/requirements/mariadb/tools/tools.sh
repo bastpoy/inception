@@ -35,10 +35,9 @@ mysql -uroot -p"${MYSQL_ROOT_PASSWORD}"<<EOSQL
     FLUSH PRIVILEGES;
 EOSQL
 
-if ! kill -s TERM "$pid" || ! wait "$pid"; then
-    echo >&2 'MySQL init process failed.'
-    exit 1
-fi
+kill $(cat /var/run/mysqld/mysqld.pid)
+# sleep 10
 
 echo "Starting MariaDB server..."
-exec mysqld --user=mysql --console
+# exec mysqld --user=mysql --console
+mysqld

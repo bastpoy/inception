@@ -35,7 +35,7 @@ EOL
 
 # Insert the lines from the temporary file into the target file at line 50
 sed -i '85r redis-config.tmp' $WP_CONFIG_FINAL
-rm redis-config.tmp
+rm redis-config.    
 
 DEBUG_LOG="/var/www/html/wp-content/debug.log"
 touch $DEBUG_LOG

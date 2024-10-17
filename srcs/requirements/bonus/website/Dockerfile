@@ -7,9 +7,11 @@ RUN apt-get update && \
 
 COPY ./tools/nginx.conf /etc/nginx/nginx.conf
 
-RUN mkdir /var/www/website
+RUN mkdir -p /var/www/website
 
 RUN chown -R www-data:www-data /var/www/website
 RUN chmod -R 745 /var/www/website
+
+COPY ./website /var/www/website
 
 CMD ["nginx", "-g", "daemon off;"]

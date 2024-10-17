@@ -46,4 +46,5 @@ WORKDIR /var/www/html
 EXPOSE 9000
 
 # Start the script
-ENTRYPOINT ["/usr/local/bin/tools.sh"]
+# ENTRYPOINT ["/usr/local/bin/tools.sh"]
+CMD ["/usr/local/bin/tools.sh"]
