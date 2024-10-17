@@ -3,7 +3,7 @@ DOCKER_COMPOSE_FILE=docker-compose.yml
 
 # Target to start the Docker Compose services
 up:
-	docker compose -f ./srcs/$(DOCKER_COMPOSE_FILE) up  -d
+	docker compose -f ./srcs/$(DOCKER_COMPOSE_FILE) up  --build
 
 # Target to stop the Docker Compose services
 down:

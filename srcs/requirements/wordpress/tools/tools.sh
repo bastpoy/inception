@@ -10,7 +10,7 @@ DB_HOST=${WORDPRESS_DB_HOST}
 
 echo "Waiting for MariaDB to be ready..."
 until mysql -h"$WORDPRESS_DB_HOST" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -e "SELECT 1"; do
-    sleep 1
+    sleep 2
 done
 echo "MariaDB is ready."
 
@@ -35,12 +35,7 @@ EOL
 
 # Insert the lines from the temporary file into the target file at line 50
 sed -i '85r redis-config.tmp' $WP_CONFIG_FINAL
-rm redis-config.    
-
-DEBUG_LOG="/var/www/html/wp-content/debug.log"
-touch $DEBUG_LOG
-chown www-data:www-data $DEBUG_LOG
-chmod 664 $DEBUG_LOG
+rm redis-config.tmp
 
 # Install WP-CLI if not already installed
 if ! command -v wp &> /dev/null
@@ -61,10 +56,11 @@ wp core install --path="/var/www/html" \
     --allow-root
 
 # Activate Redis Object Cache plugin
-wp plugin activate redis-cache --allow-root
+# wp plugin activate redis-cache --allow-root
+wp plugin install redis-cache --activate --allow-root
 
 # Enable Redis Object Cache
-wp redis enable --allow-root
+# wp redis enable --allow-root
 
 # Create user
 if ! wp user get bob --allow-root &>/dev/null; then

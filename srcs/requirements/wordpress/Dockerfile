@@ -6,7 +6,7 @@ RUN apt-get update && apt-get install -y \
     php7.4-fpm \
     php7.4-mysql \
     mariadb-server \
-    redis-tools \
+    # redis-tools \
     wget \
     unzip \
     curl \
