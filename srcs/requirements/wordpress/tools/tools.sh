@@ -56,16 +56,12 @@ wp core install --path="/var/www/html" \
     --allow-root
 
 # Activate Redis Object Cache plugin
-# wp plugin activate redis-cache --allow-root
 wp plugin install redis-cache --activate --allow-root
 
-# Enable Redis Object Cache
-# wp redis enable --allow-root
-
 # Create user
-if ! wp user get bob --allow-root &>/dev/null; then
+if ! wp user get ${WORDPRESS_USER} --allow-root &>/dev/null; then
     # User doesn't exist, so create it
-    wp user create bob maildebob@rien.com \
+    wp user create ${WORDPRESS_USER} ${WORDPRESS_MAIL} \
     --user_pass="${WORDPRESS_USERPASS}" \
     --allow-root
     echo "User 'bob' created successfully."

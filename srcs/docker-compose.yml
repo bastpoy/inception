@@ -76,6 +76,8 @@ services:
 
   weather:
     build: ./requirements/bonus/weather
+    volumes:
+      - weather:/var/www/weather
     image: weather
     restart: always
     networks:
@@ -87,14 +89,20 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /home/bastpoy/data/mariadb
+      device: /home/bpoyet/data/mariadb
 
   wordpress:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /home/bastpoy/data/wordpress
+      device: /home/bpoyet/data/wordpress
+  weather:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/bpoyet/data/weather
 
 networks:
   wp-networks:

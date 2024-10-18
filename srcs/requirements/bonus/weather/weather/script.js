@@ -1,7 +1,9 @@
 import fetch from "node-fetch";
+import fs from "fs";
+import path from "path";
 
 const API_KEY = "d5fc3a85c073273f060229b6185e7a1b"; // Replace with your OpenWeather API key
-const cities = ['Lyon', 'London', 'New York', 'Tokyo', 'Paris', 'Berlin', 'Sydney', 'Moscow', 'Rio de Janeiro', 'Cape Town', 'Mumbai'];
+const cities = ['Marseille', 'Lyon', 'London', 'New York', 'Tokyo', 'Paris', 'Berlin', 'Sydney', 'Moscow', 'Rio de Janeiro', 'Cape Town', 'Mumbai'];
 
 function getRandomCity() {
     const randomIndex = Math.floor(Math.random() * cities.length);
@@ -34,7 +36,12 @@ async function  main() {
     while (true) {
         const result = await getWeatherForRandomCity();
         if (result) {
-            console.log(`The temperature in ${result.city} is ${result.temperature}°C`);
+            const message = `The temperature in ${result.city} is ${result.temperature}°C\n`;
+            try {
+                fs.appendFileSync(path.join("/var/www/weather/", "weather.log"), message);
+            } catch (err) {
+                console.error("Error writing to weather.log:", err);
+            }
         }
         await new Promise(resolve => setTimeout(resolve, 5000)); // Wait for 5 seconds before the next request
     }
